@@ -24,7 +24,7 @@ function sendMessage() {
                 messagesContainer.appendChild(replyElement);
 
                 userInput.value = ""
-                puter.ai.chat(message).then((response) => {
+                puter.ai.chat(messages).then((response) => {
                     messages.push({ role: "assistant", content: response });
                     replyElement.textContent = response;
                 });
