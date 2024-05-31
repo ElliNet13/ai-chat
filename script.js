@@ -9,7 +9,7 @@ function sendMessage() {
         // Create user message element
         var userMessageElement = document.createElement('div');
         userMessageElement.classList.add('message');
-        userMessageElement.textContent = message;
+        userMessageElement.textContent = "You: " + message;
         messagesContainer.appendChild(userMessageElement);
 
         // Add user message to messages array
@@ -26,14 +26,14 @@ function sendMessage() {
         // Send messages to the chat API
         puter.ai.chat(messages).then((response) => {
             // Extract the assistant's reply content
-            let replyContent = response.message.content;
+            let replyContent = "AI: " + response.message.content;
 
             // Add assistant's reply to messages array
             messages.push({ role: "assistant", content: replyContent });
             replyElement.textContent = replyContent;
         }).catch((error) => {
             console.error("Detailed Error:", error);
-            replyElement.textContent = "Error: Could not get a response.";
+            replyElement.textContent = "Error! Check console for details.";
         });
 
         // Scroll to bottom of messages
