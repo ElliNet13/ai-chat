@@ -8,7 +8,7 @@ function sendMessage() {
 
             if (message !== "") {
                 // Create user message element
-                var userMessageElement = document.createElement('a');
+                var userMessageElement = document.createElement('div');
                 userMessageElement.classList.add('message');
                 userMessageElement.textContent = message;
                 messagesContainer.appendChild(userMessageElement);
@@ -18,7 +18,7 @@ function sendMessage() {
                 
 
                 // Create reply message element
-                var replyElement = document.createElement('code');
+                var replyElement = document.createElement('div');
                 replyElement.classList.add('message');
                 replyElement.textContent = "Generateing...";
                 messagesContainer.appendChild(replyElement);
