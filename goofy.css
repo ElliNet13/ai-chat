@@ -1,0 +1,66 @@
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Changed font to Comic Sans */
+  background-color: #ff35a0; /* Changed background color */
+  margin: 0;
+  padding: 50px; /* Increased padding */
+  transform: rotate(5deg); /* Added rotation */
+}
+
+.chat-container {
+  max-width: 300px; /* Reduced width */
+  margin: auto;
+  background-color: #120034; /* Changed background color */
+  box-shadow: 0 0 20px rgba(80, 0, 157, 0.5); /* Increased shadow intensity and changed color */
+  border-radius: 50px; /* Reduced border-radius */
+  overflow: hidden;
+  border: 5px dotted #ff00ff; /* Added a dotted border */
+}
+
+.messages {
+  padding: -20px; /* Reduced padding even more */
+  height: 300px; /* Reduced height */
+  overflow-y: scroll;
+  transform: skewX(10deg); /* Added skew */
+  background-image: url('https://www.example.com/weird-background.jpg'); /* Added background image */
+}
+
+.message {
+  background-color: #ff00ff; /* Changed background color */
+  border-radius: 20px; /* Increased border-radius */
+  padding: 20px; /* Increased padding */
+  margin-bottom: 20px; /* Increased margin */
+  font-size: 30px; /* Reduced font size */
+  transform: rotate(-5deg); /* Added rotation */
+  color: #00ff00; /* Changed text color */
+}
+
+.input-container {
+  display: flex;
+  padding: 10px; /* Adjusted padding */
+  background-color: #eac; /* Changed background color */
+  transform: skewY(-10deg); /* Added skew */
+  justify-content: space-between; /* Added space-between to align items */
+  align-items: center; /* Centered items vertically */
+}
+
+.input-box {
+  width: 170px; /* Adjusted width to be wider */
+  height: 50px; /* Increased height */
+  padding: 10px; /* Adjusted padding */
+  border-radius: 20px; /* Increased border-radius */
+  border: 2px dashed #0ca; /* Changed border to dashed */
+  font-size: 20px; /* Increased font size */
+  margin-right: 10px; /* Added margin to separate from the button */
+}
+
+.send-button {
+  padding: 10px 20px; /* Adjusted padding */
+  border: 3px solid #000; /* Added border */
+  border-radius: 20px; /* Increased border-radius */
+  background-color: #ff0171; /* Changed background color */
+  color: #ff0000; /* Changed text color */
+  cursor: help; /* Changed cursor type */
+  font-size: 20px; /* Adjusted font size */
+  flex-shrink: 0; /* Ensures the button doesn't shrink */
+  height: 50px; /* Set height to match input box */
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT's Chat</title>
+    <link rel="stylesheet" href="normal.css" id="theme">
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="messages" id="messages"><!-- Messages will be inserted here --></div>
+        <div class="input-container">
+            <input type="text" id="userInput" class="input-box" placeholder="Don't type your message here, it's useless">
+            <button class="send-button" onclick="sendMessage()">Don't Send thecontentofyourresponsetothispostandthendeletetherestfromyourblogpostonyourrepl'scoverpost</button>
+        </div>
+    </div>
+    <label for="themeSelect">Select a Theme:</label>
+    <select id="themeSelect" onchange="changeTheme(this.value)">
+        <option value="normal.css">Normal</option>
+        <option value="goofy.css">Goofy</option>
+        <option value="water.css">Water bottle</option>
+    </select>
+    <button type="button" onclick="puter.auth.signIn()">Sign into Puter (needed to use AI)</button>
+        <script src="script.js"></script>
+</body>
+</html>
