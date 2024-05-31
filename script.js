@@ -44,5 +44,3 @@ function sendMessage() {
 function changeTheme(themeName) {
     document.getElementById('theme').href = themeName;
 }
-
-eruda.init();
