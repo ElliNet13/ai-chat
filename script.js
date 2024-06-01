@@ -1,4 +1,7 @@
-let messages = [];
+let messages = [{
+    role: "assistant",
+    content: "AI: " + "Hello!" 
+}];
 
 function sendMessage() {
     var userInput = document.getElementById('userInput');
@@ -29,8 +32,8 @@ function sendMessage() {
             let replyContent = response.message.content;
 
             // Add assistant's reply to messages array
-            messages.push({ role: "assistant", content: replyContent });
-            replyElement.textContent = "AI: " + replyContent;
+            messages.push({ role: "assistant", content:  "AI: " + replyContent });
+            replyElement.textContent = replyContent;
         }).catch((error) => {
             console.error("Detailed Error:", error);
             replyElement.textContent = "Error! Check console for details.";
