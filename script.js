@@ -32,7 +32,7 @@ function sendMessage() {
             let replyContent = response.message.content;
 
             // Add assistant's reply to messages array
-            messages.push({ role: "assistant", content:  "AI: " + replyContent });
+            messages.push({ role: "assistant", content: replyContent });
             replyElement.textContent = replyContent;
         }).catch((error) => {
             console.error("Detailed Error:", error);
