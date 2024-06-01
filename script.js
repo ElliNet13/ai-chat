@@ -26,11 +26,11 @@ function sendMessage() {
         // Send messages to the chat API
         puter.ai.chat(messages).then((response) => {
             // Extract the assistant's reply content
-            let replyContent = "AI: " + response.message.content;
+            let replyContent = response.message.content;
 
             // Add assistant's reply to messages array
             messages.push({ role: "assistant", content: replyContent });
-            replyElement.textContent = replyContent;
+            replyElement.textContent = "AI: " + replyContent;
         }).catch((error) => {
             console.error("Detailed Error:", error);
             replyElement.textContent = "Error! Check console for details.";
