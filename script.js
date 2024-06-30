@@ -1,3 +1,4 @@
+const userInput = document.getElementById('userInput');
 let messages = [
     {
         role: "system",
@@ -88,3 +89,15 @@ function changeTheme(themeName) {
 function changeTheme(themeName) {
     document.getElementById('theme').href = themeName;
 }
+
+// Add an event listener for the 'keypress' event
+userInput.addEventListener('keypress', function(event) {
+    // Check if the key pressed is Enter (key code 13)
+    if (event.keyCode === 13 || event.which === 13) {
+        // Prevent the default action (form submission)
+        event.preventDefault();
+        
+        // Call your sendMessage function to send the message
+        sendMessage();
+    }
+});
