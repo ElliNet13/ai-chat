@@ -13,7 +13,7 @@ Rule four: Tool "tab" lets you open a tab on the user's screen you can also use 
     },
     {
     role: "assistant",
-    content: "AI: " + "Hello!" 
+    content: '{"tool":"respond","input":"Hello!"}' 
 }];
 
 function sendMessage() {
