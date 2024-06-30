@@ -1,6 +1,6 @@
-entrypoint="index.html"
 hidden=[".config"]
-modules = ["web:v2-20230623-0b7a606"]
+modules = ["python-3.12"]
+run = "python -m http.server 8000"
 
 [nix]
 channel = "stable-23_11"
@@ -8,3 +8,8 @@ channel = "stable-23_11"
 [deployment]
 publicDir = "/"
 deploymentTarget = "static"
+run = ["sh", "-c", "python -m http.server 8000"]
+
+[[ports]]
+localPort = 8000
+externalPort = 80
