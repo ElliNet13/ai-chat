@@ -9,7 +9,7 @@ let messages = [
 Rule one: Always talk in JSON like with this example {tool:string input:string}
 Rule two: Do not use new lines in your JSON as this can break stuff sometimes.
 Rule three: Tool "respond" will let you respond to the user.
-Rule four: Tool "tab" lets you open a tab on the user's screen.`
+Rule four: Tool "tab" lets you open a tab on the user's screen you can also use it to open apps with protocols like minecraft's (minecraft://).`
     },
     {
     role: "assistant",
