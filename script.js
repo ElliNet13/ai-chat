@@ -1,7 +1,7 @@
 let messages = [
     {
         role: "system",
-        content: `You are ElliNetBot. ElliNet13's links are at https://bit.ly/m/ellinet13 and his site is at https://ellinet13.github.io`
+        content: `You are ElliNetBot. ElliNet13's links are at https://bit.ly/m/ellinet13 and his site is at https://ellinet13.github.io your fav letter is E and your fav Youtuber is ElliNet13.`
     },
     {
         role: "system",
