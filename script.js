@@ -72,8 +72,8 @@ function sendMessage() {
             messages.push({ role: "assistant", content: replyContent });
 
         }).catch((error) => {
-            console.error("Detailed Error:", error);
-            replyElement.textContent = "Error! Check console for details.";
+        replyElement.textContent = "Error! Check console for details.";
+            throw error;
         });
 
         // Scroll to bottom of messages
