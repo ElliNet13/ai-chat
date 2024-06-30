@@ -66,7 +66,7 @@ function sendMessage() {
                 window.open(input, '_blank');
                 replyElement.textContent = "Opened a new tab.";
             } else {
-                replyElement.textContent = "Unknown tool requested.";
+                replyElement.textContent = "Unknown tool requested. (" + tool + ")";
             }
 
             // Add assistant's reply to messages array
