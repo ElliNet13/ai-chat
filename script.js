@@ -51,8 +51,10 @@ function sendMessage() {
             try {
                 jsonResponse = JSON.parse(replyContent);
             } catch (e) {
-                console.error("Failed to parse JSON response:", e);
+                
                 replyElement.textContent = "Error parsing response. Check console for details.";
+messages.push({ role: "system", content: "Your JSON is not valid." });
+                throw e
                 return;
             }
 
@@ -67,6 +69,7 @@ function sendMessage() {
                 replyElement.textContent = "Opened a new tab.";
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
+                messages.push({ role: "system", content: "The tool you requested does not exist!" });
             }
 
             // Add assistant's reply to messages array
