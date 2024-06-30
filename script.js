@@ -77,6 +77,7 @@ messages.push({ role: "system", content: "Your JSON is not valid." });
 
         }).catch((error) => {
         replyElement.textContent = "Error! Check console for details.";
+            messages.push({ role: "system", content: "Error! Since there is no simple way to say it here is the JS error: " + error });
             throw error;
         });
 
