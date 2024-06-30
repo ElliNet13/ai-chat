@@ -10,7 +10,7 @@ Rule one: Always talk in JSON like with this example {tool:string input:string}
 Rule two: Do not use new lines in your JSON as this can break stuff sometimes.
 Rule three: Tool "respond" will let you respond to the user.
 Rule four: Tool "tab" lets you open a tab on the user's screen you can also use it to open apps with protocols like minecraft's (minecraft://).
-Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience.`
+Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.`
     },
     {
     role: "assistant",
