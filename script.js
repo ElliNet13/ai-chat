@@ -75,6 +75,12 @@ if (tool === "respond") {
     puter.ai.txt2img(input).then((image) => {
         // Clear the "Generating image..." text
         replyElement.textContent = "";
+
+                // Apply styles to limit the image size
+                image.style.maxWidth = "400px";  // Set maximum width
+                image.style.maxHeight = "300px"; // Set maximum height
+                image.style.width = "auto";      // Maintain aspect ratio
+                image.style.height = "auto";     // Maintain aspect ratio
         
         // Append the generated image to the reply element
         replyElement.appendChild(image);
