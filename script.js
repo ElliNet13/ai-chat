@@ -21,7 +21,7 @@ Rule six: Tool "image" will let you generate an image. The input will be the pro
     }
 ];
 
-function sendMessage(bloblink) {
+function sendMessage() {
     var message = userInput.value.trim();
     var messagesContainer = document.getElementById('messages');
 
@@ -44,7 +44,7 @@ function sendMessage(bloblink) {
         userInput.value = "";
 
         // Send messages to the chat API
-        puter.ai.chat(messages, bloblink).then((response) => {
+        puter.ai.chat(messages).then((response) => {
             // Extract the assistant's reply content
             let replyContent = response.message.content;
 
@@ -122,20 +122,3 @@ userInput.addEventListener('keypress', function(event) {
         sendMessage();
     }
 });
-
-        // Add event listener for file input changes
-        fileInput.addEventListener('change', function(event) {
-            // Get the selected file
-            const file = event.target.files[0];
-            
-            if (file) {
-                // Create a Blob URL
-                const blobURL = URL.createObjectURL(file);
-
-                // Send the Blob URL using your sendMessage function
-                sendMessage(blobURL);
-
-                // revoke the Blob URL after usage to free up resources
-                URL.revokeObjectURL(blobURL);
-            }
-        });
