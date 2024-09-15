@@ -59,24 +59,33 @@ function sendMessage() {
             }
 
             // Handle the parsed JSON response
-            let tool = jsonResponse.tool;
-            let input = jsonResponse.input;
+let tool = jsonResponse.tool;
+let input = jsonResponse.input;
 
-            if (tool === "respond") {
-                replyElement.textContent = input;
-            } else if (tool === "tab") {
-                window.open(input, '_blank');
-                replyElement.textContent = "Opened a new tab.";
-            } else if (tool === "image") {
-                replyElement.textContent = "Generating image...";
-                puter.ai.txt2img('A picture of a cat.').then((image) => {
-                    replyElement.appendChild(image);
-                    replyElement.textContent = "";
-                });
-            } else {
-                replyElement.textContent = "Unknown tool requested. (" + tool + ")";
-                messages.push({ role: "system", content: "The tool you requested does not exist!" });
-            }
+if (tool === "respond") {
+    replyElement.textContent = input;
+} else if (tool === "tab") {
+    window.open(input, '_blank');
+    replyElement.textContent = "Opened a new tab.";
+} else if (tool === "image") {
+    // Show a generating image message
+    replyElement.textContent = "Generating image...";
+
+    // Use the puter.ai.txt2img function to generate the image
+    puter.ai.txt2img(input).then((image) => {
+        // Clear the "Generating image..." text
+        replyElement.textContent = "";
+        
+        // Append the generated image to the reply element
+        replyElement.appendChild(image);
+    }).catch((error) => {
+        replyElement.textContent = "Error generating image.";
+        console.error(error); // Log error for debugging
+    });
+} else {
+    replyElement.textContent = "Unknown tool requested. (" + tool + ")";
+    messages.push({ role: "system", content: "The tool you requested does not exist!" });
+}
 
             // Add assistant's reply to messages array
             messages.push({ role: "assistant", content: replyContent });
