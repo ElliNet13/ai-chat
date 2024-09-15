@@ -15,9 +15,10 @@ Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors 
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.`
     },
     {
-    role: "assistant",
-    content: '{"tool":"respond","input":"Hello!"}' 
-}];
+        role: "assistant",
+        content: '{"tool":"respond","input":"Hello!"}' 
+    }
+];
 
 function sendMessage() {
     var userInput = document.getElementById('userInput');
@@ -52,10 +53,8 @@ function sendMessage() {
             try {
                 jsonResponse = JSON.parse(replyContent);
             } catch (e) {
-                
                 replyElement.textContent = "Error parsing response. Check console for details.";
-messages.push({ role: "system", content: "Your JSON is not valid." });
-                throw e
+                messages.push({ role: "system", content: "Your JSON is not valid." });
                 return;
             }
 
@@ -69,8 +68,8 @@ messages.push({ role: "system", content: "Your JSON is not valid." });
                 window.open(input, '_blank');
                 replyElement.textContent = "Opened a new tab.";
             } else if (tool === "image") {
-                replyContent.textContent = "Generating image...";
-                puter.ai.txt2img('A picture of a cat.').then((image)=>{
+                replyElement.textContent = "Generating image...";
+                puter.ai.txt2img('A picture of a cat.').then((image) => {
                     replyElement.appendChild(image);
                     replyElement.textContent = "";
                 });
@@ -83,9 +82,8 @@ messages.push({ role: "system", content: "Your JSON is not valid." });
             messages.push({ role: "assistant", content: replyContent });
 
         }).catch((error) => {
-        replyElement.textContent = "Error! Check console for details.";
+            replyElement.textContent = "Error! Check console for details.";
             messages.push({ role: "system", content: "Error! Since there is no simple way to say it here is the JS error: " + error });
-            throw error;
         });
 
         // Scroll to bottom of messages
@@ -93,18 +91,15 @@ messages.push({ role: "system", content: "Your JSON is not valid." });
     }
 }
 
-function changeTheme(themeName) {
-    document.getElementById('theme').href = themeName;
-}
-
+// Single definition of changeTheme function
 function changeTheme(themeName) {
     document.getElementById('theme').href = themeName;
 }
 
 // Add an event listener for the 'keypress' event
 userInput.addEventListener('keypress', function(event) {
-    // Check if the key pressed is Enter (key code 13)
-    if (event.keyCode === 13 || event.which === 13) {
+    // Check if the key pressed is Enter
+    if (event.key === 'Enter') {
         // Prevent the default action (form submission)
         event.preventDefault();
         
