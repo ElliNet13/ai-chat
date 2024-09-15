@@ -1,4 +1,5 @@
 const userInput = document.getElementById('userInput');
+const fileInput = document.getElementById('fileInput'); // Add file input element
 let messages = [
     {
         role: "system",
@@ -20,8 +21,7 @@ Rule six: Tool "image" will let you generate an image. The input will be the pro
     }
 ];
 
-function sendMessage() {
-    var userInput = document.getElementById('userInput');
+function sendMessage(bloblink) {
     var message = userInput.value.trim();
     var messagesContainer = document.getElementById('messages');
 
@@ -44,7 +44,7 @@ function sendMessage() {
         userInput.value = "";
 
         // Send messages to the chat API
-        puter.ai.chat(messages).then((response) => {
+        puter.ai.chat(messages, bloblink).then((response) => {
             // Extract the assistant's reply content
             let replyContent = response.message.content;
 
@@ -59,39 +59,39 @@ function sendMessage() {
             }
 
             // Handle the parsed JSON response
-let tool = jsonResponse.tool;
-let input = jsonResponse.input;
+            let tool = jsonResponse.tool;
+            let input = jsonResponse.input;
 
-if (tool === "respond") {
-    replyElement.textContent = input;
-} else if (tool === "tab") {
-    window.open(input, '_blank');
-    replyElement.textContent = "Opened a new tab.";
-} else if (tool === "image") {
-    // Show a generating image message
-    replyElement.textContent = "Generating image...";
+            if (tool === "respond") {
+                replyElement.textContent = input;
+            } else if (tool === "tab") {
+                window.open(input, '_blank');
+                replyElement.textContent = "Opened a new tab.";
+            } else if (tool === "image") {
+                // Show a generating image message
+                replyElement.textContent = "Generating image...";
 
-    // Use the puter.ai.txt2img function to generate the image
-    puter.ai.txt2img(input).then((image) => {
-        // Clear the "Generating image..." text
-        replyElement.textContent = "";
+                // Use the puter.ai.txt2img function to generate the image
+                puter.ai.txt2img(input).then((image) => {
+                    // Clear the "Generating image..." text
+                    replyElement.textContent = "";
 
-                // Apply styles to limit the image size
-                image.style.maxWidth = "400px";  // Set maximum width
-                image.style.maxHeight = "300px"; // Set maximum height
-                image.style.width = "auto";      // Maintain aspect ratio
-                image.style.height = "auto";     // Maintain aspect ratio
-        
-        // Append the generated image to the reply element
-        replyElement.appendChild(image);
-    }).catch((error) => {
-        replyElement.textContent = "Error generating image.";
-        console.error(error); // Log error for debugging
-    });
-} else {
-    replyElement.textContent = "Unknown tool requested. (" + tool + ")";
-    messages.push({ role: "system", content: "The tool you requested does not exist!" });
-}
+                    // Apply styles to limit the image size
+                    image.style.maxWidth = "400px";  // Set maximum width
+                    image.style.maxHeight = "300px"; // Set maximum height
+                    image.style.width = "auto";      // Maintain aspect ratio
+                    image.style.height = "auto";     // Maintain aspect ratio
+                    
+                    // Append the generated image to the reply element
+                    replyElement.appendChild(image);
+                }).catch((error) => {
+                    replyElement.textContent = "Error generating image.";
+                    console.error(error); // Log error for debugging
+                });
+            } else {
+                replyElement.textContent = "Unknown tool requested. (" + tool + ")";
+                messages.push({ role: "system", content: "The tool you requested does not exist!" });
+            }
 
             // Add assistant's reply to messages array
             messages.push({ role: "assistant", content: replyContent });
@@ -122,3 +122,20 @@ userInput.addEventListener('keypress', function(event) {
         sendMessage();
     }
 });
+
+        // Add event listener for file input changes
+        fileInput.addEventListener('change', function(event) {
+            // Get the selected file
+            const file = event.target.files[0];
+            
+            if (file) {
+                // Create a Blob URL
+                const blobURL = URL.createObjectURL(file);
+
+                // Send the Blob URL using your sendMessage function
+                sendMessage(blobURL);
+
+                // revoke the Blob URL after usage to free up resources
+                URL.revokeObjectURL(blobURL);
+            }
+        });

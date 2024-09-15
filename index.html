@@ -13,6 +13,11 @@
     <div class="chat-container">
         <div class="messages" id="messages"><!-- Messages will be inserted here --></div>
         <div class="input-container">
+            <!-- Hidden input -->
+<input type="file" id="fileInput" accept="image/*" style="position: absolute; left: -9999px;"/>
+
+<!-- Visible label -->
+<button><label for="fileInput" style="cursor: pointer;">Upload<br>an<br>image<br>(sends image<br>and text)</label></button>
             <input type="text" id="userInput" class="input-box" placeholder="Type your message...">
             <button class="send-button" onclick="sendMessage()">Send</button>
         </div>
