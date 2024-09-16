@@ -82,7 +82,7 @@ function sendMessage() {
                     let subdomain = puter.randName();
                     const site = await puter.hosting.create(subdomain, dirName)
         
-                    replyElement.textContent = `Website hosted at: <a href="https://${site.subdomain}.puter.site" target="_blank">https://${site.subdomain}.puter.site</a>`
+                    replyElement.innerHTML = `Website hosted at: <a href="https://${site.subdomain}.puter.site" target="_blank">https://${site.subdomain}.puter.site</a>`
                 })();
             } else if (tool === "image") {
                 // Show a generating image message
