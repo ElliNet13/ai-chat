@@ -82,7 +82,17 @@ function sendMessage() {
                     let subdomain = puter.randName();
                     const site = await puter.hosting.create(subdomain, dirName)
         
-                    replyElement.innerHTML = `Website hosted at: <a href="https://${site.subdomain}.puter.site" target="_blank">https://${site.subdomain}.puter.site</a>`
+                    // Create the anchor element
+const anchor = document.createElement('a');
+anchor.href = `https://${site.subdomain}.puter.site`;
+anchor.target = "_blank";
+anchor.textContent = `https://${site.subdomain}.puter.site`;
+
+// Add text before the anchor
+replyElement.textContent = "Website hosted at: ";
+
+// Append the anchor to replyElement
+replyElement.appendChild(anchor);
                 })();
             } else if (tool === "image") {
                 // Show a generating image message
