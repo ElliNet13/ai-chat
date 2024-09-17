@@ -1,9 +1,24 @@
 const userInput = document.getElementById('userInput');
 const fileInput = document.getElementById('fileInput'); // Add file input element
+var sitemap
+fetch('/sitemap.xml')
+  .then(response => {
+    if (!response.ok) {
+        sitemap = 'Network response was not ok'
+    }
+    return response.text();
+  })
+  .then(data => {
+    sitemap = data;  // This will log the XML content of the sitemap
+  })
+  .catch(error => {
+    sitemap = 'There has been a problem with your fetch operation:' + error
+  });
+
 let messages = [
     {
         role: "system",
-        content: `You are ElliNetBot. ElliNet13's links are at https://bit.ly/m/ellinet13 and his site is at https://ellinet13.github.io your fav letter is E and your fav Youtuber is ElliNet13. ElliNet13 is epic. You are on the site https://ellinet13.github.io/ai-chat be the best you can.`
+        content: `You are ElliNetBot. ElliNet13's links are at https://bit.ly/m/ellinet13 and his site is at https://ellinet13.github.io or https://ellinet13.com your fav letter is E and your fav Youtuber is ElliNet13. ElliNet13 is epic. You are on the site https://ellinet13.github.io/ai-chat be the best you can.`
     },
     {
         role: "system",
@@ -15,6 +30,10 @@ Rule four: Tool "tab" lets you open a tab on the user's screen you can also use 
 Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
 Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.`
+    },
+    {
+        role: "system",
+        content: 'The sitemap of ellinet13.github.io (the site you are on) is: ' + sitemap
     },
     {
         role: "assistant",
