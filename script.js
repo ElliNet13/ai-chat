@@ -1,18 +1,23 @@
 const userInput = document.getElementById('userInput');
 const fileInput = document.getElementById('fileInput'); // Add file input element
 var sitemap
+let sitemap = '';
+
 fetch('/sitemap.xml')
   .then(response => {
     if (!response.ok) {
-        sitemap = 'Network response was not ok'
+        sitemap = 'Network response was not ok';
+        return; // Prevent further execution if response is not ok
     }
     return response.text();
   })
   .then(data => {
-    sitemap = data;
+    if (data) {
+      sitemap = data;
+    }
   })
   .catch(error => {
-    sitemap = 'There has been a problem with your fetch operation:' + error
+    sitemap = 'There has been a problem with your fetch operation: ' + error;
   });
 
 let messages = [
