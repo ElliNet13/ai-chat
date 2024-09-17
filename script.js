@@ -1,6 +1,5 @@
 const userInput = document.getElementById('userInput');
 const fileInput = document.getElementById('fileInput'); // Add file input element
-var sitemap
 let sitemap = '';
 
 fetch('/sitemap.xml')
