@@ -9,7 +9,7 @@ fetch('/sitemap.xml')
     return response.text();
   })
   .then(data => {
-    sitemap = data;  // This will log the XML content of the sitemap
+    sitemap = data;
   })
   .catch(error => {
     sitemap = 'There has been a problem with your fetch operation:' + error
