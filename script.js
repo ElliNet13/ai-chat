@@ -45,6 +45,16 @@ Rule seven: Tool "site" will let you create a website under a random subdomain. 
     }
 ];
 
+function giveAIuserInfo() {
+    puter.auth.getUser().then(function(user) {
+        messages.push({ role: "system", content: `User info: ${JSON.stringify(user)}` });
+    });
+}
+
+if  (puter.auth.isSignedIn()) {
+    giveAIuserInfo();
+}
+
 function sendMessage() {
     var message = userInput.value.trim();
     var messagesContainer = document.getElementById('messages');
@@ -172,3 +182,11 @@ userInput.addEventListener('keypress', function(event) {
         sendMessage();
     }
 });
+
+function loginbutton() {
+    async () => {
+        await puter.auth.signIn().then((res) => {
+            giveAIuserInfo();
+        });
+    }
+}
