@@ -179,7 +179,7 @@ function changeTheme(themeName) {
             
             // Bring the blinds back up after a short delay
             setTimeout(() => {
-                blinds.style.top = '-100vh';
+                blinds.style.top = '-100%';
             }, 2000); // Blinds stay down for 2 seconds
         }, 1000); // Wait for 1 second (the duration of the blinds falling)
 }
