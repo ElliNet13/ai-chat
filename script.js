@@ -1,5 +1,6 @@
 const userInput = document.getElementById('userInput');
 const fileInput = document.getElementById('fileInput'); // Add file input element
+const blinds = document.getElementById('blinds');
 let sitemap = '';
 
 fetch('/sitemap.xml')
@@ -168,7 +169,19 @@ replyElement.appendChild(anchor);
 
 // Single definition of changeTheme function
 function changeTheme(themeName) {
-    document.getElementById('theme').href = themeName;
+        // Bring the blinds down
+        blinds.style.top = '0';
+
+        // Change background color after the blinds are fully down
+        setTimeout(() => {
+            // Generate a random color
+            document.getElementById('theme').href = themeName;
+            
+            // Bring the blinds back up after a short delay
+            setTimeout(() => {
+                blinds.style.top = '-100%';
+            }, 2000); // Blinds stay down for 2 seconds
+        }, 1000); // Wait for 1 second (the duration of the blinds falling)
 }
 
 // Add an event listener for the 'keypress' event
