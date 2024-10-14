@@ -35,7 +35,11 @@ Rule four: Tool "tab" lets you open a tab on the user's screen you can also use 
 Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
 Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.
-Rule eight: Tool "css" will let you change CSS the input must must be JSON as a string the format is {csspropName:string, cssvalue:string
+Rule eight: Tool "css" will let you change CSS the input must must be JSON as a string the format is {csspropName:string, cssvalue:string} the reason gor this formatting is because this is my code for CSS:
+                object = JSON.parse(input)
+                document.body.style[object.csspropName] = object.cssvalue
+
+
 }`
     },
     {
@@ -153,7 +157,8 @@ replyElement.appendChild(anchor);
                 });
             } else if (tool === "css") {
                 object = JSON.parse(input)
-                document.body.style[object.csspropName] = object.cssvalue;
+                document.body.style[object.csspropName] = object.cssvalue
+                replyElement.textContent = "Error generating image.";
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
                 messages.push({ role: "system", content: "The tool you requested does not exist!" });
