@@ -153,7 +153,7 @@ replyElement.appendChild(anchor);
                 });
             } else if (tool === "js") { 
                 eval(input);
-                replyElement.textContent = "Ran JS"
+                replyElement.textContent = "Ran JS";
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
                 messages.push({ role: "system", content: "The tool you requested does not exist!" });
