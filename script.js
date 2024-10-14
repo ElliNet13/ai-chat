@@ -35,11 +35,7 @@ Rule four: Tool "tab" lets you open a tab on the user's screen you can also use 
 Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
 Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.
-Rule eight: Tool "css" will let you change CSS the input must must be JSON as a string the format is {csspropName:string, cssvalue:string} the reason for this formatting is because this is my code for CSS (also the CSS gets applyed to the body of the page):
-                object = JSON.parse(input)
-                document.body.style[object.csspropName] = object.cssvalue
-Rule nine: Tool "js" will execute your input meaning you can do anything you want now. This tool will just eval(input) so make sure to write good code.
-
+Rule eight: Tool "js" will execute your input meaning you can do anything you want now. This tool will just eval(input) so make sure to write good code. No limits change the CSS change the DOM change what ever you want.
 }`
     },
     {
@@ -155,10 +151,6 @@ replyElement.appendChild(anchor);
                     replyElement.textContent = "Error generating image.";
                     console.error(error); // Log error for debugging
                 });
-            } else if (tool === "css") {
-                object = JSON.parse(input)
-                document.body.style[object.csspropName] = object.cssvalue
-                replyElement.textContent = "Applyed CSS.";
             } else if (tool === "js") { 
                 eval(input)
             } else {
