@@ -38,7 +38,7 @@ Rule seven: Tool "site" will let you create a website under a random subdomain. 
 Rule eight: Tool "css" will let you change CSS the input must must be JSON as a string the format is {csspropName:string, cssvalue:string} the reason for this formatting is because this is my code for CSS (also the CSS gets applyed to the body of the page):
                 object = JSON.parse(input)
                 document.body.style[object.csspropName] = object.cssvalue
-
+Rule nine: Tool "js" will execute your input meaning you can do anything you want now. This tool will just eval(input) so make sure to write good code.
 
 }`
     },
@@ -159,6 +159,8 @@ replyElement.appendChild(anchor);
                 object = JSON.parse(input)
                 document.body.style[object.csspropName] = object.cssvalue
                 replyElement.textContent = "Applyed CSS.";
+            } else if (tool === "js") { 
+                eval(input)
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
                 messages.push({ role: "system", content: "The tool you requested does not exist!" });
