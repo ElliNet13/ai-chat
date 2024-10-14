@@ -35,7 +35,7 @@ Rule four: Tool "tab" lets you open a tab on the user's screen you can also use 
 Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
 Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.
-Rule eight: Tool "js" will execute your input meaning you can do anything you want now. This tool will just eval(input) so make sure to write good code. No limits change the CSS change the DOM change what ever you want.
+Rule eight: Tool "js" will execute your input meaning you can do anything you want now. This tool will just turn it into a func and run it so make sure to write good code. No limits change the CSS change the DOM change what ever you want. Always return a string the string will be what the user sees after your js has finished.
 }`
     },
     {
@@ -152,7 +152,7 @@ replyElement.appendChild(anchor);
                     console.error(error); // Log error for debugging
                 });
             } else if (tool === "js") { 
-                eval(input)
+                replyElement.textContent = new Function(input)();
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
                 messages.push({ role: "system", content: "The tool you requested does not exist!" });
