@@ -34,7 +34,9 @@ Rule three: Tool "respond" will let you respond to the user.
 Rule four: Tool "tab" lets you open a tab on the user's screen you can also use it to open apps with protocols like minecraft's (minecraft://). You can also use this to run any steam game! Run this with steam://rungameid/[INSERT THE STEAM APP ID HERE] with everything you know you should know steam app/game IDs. Enter the full URL or it will not work. You can include pages.
 Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors are not good for anyone's experience. This is production.
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
-Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.`
+Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.
+Rule eight: Tool "css" will let you change CSS the input must must be JSON as a string the format is {csspropName:string, cssvalue:string
+}`
     },
     {
         role: "system",
@@ -149,6 +151,9 @@ replyElement.appendChild(anchor);
                     replyElement.textContent = "Error generating image.";
                     console.error(error); // Log error for debugging
                 });
+            } else if (tool === "css") {
+                object = JSON.parse(input)
+                document.body.style[object.csspropName] = object.cssvalue;
             } else {
                 replyElement.textContent = "Unknown tool requested. (" + tool + ")";
                 messages.push({ role: "system", content: "The tool you requested does not exist!" });
