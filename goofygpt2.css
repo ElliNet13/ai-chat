@@ -1,0 +1,113 @@
+/* Goofy Theme */
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #fffb8f; /* Bright yellow background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    animation: spin 10s linear infinite; /* Spin the whole page for fun */
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.chat-container {
+    background-color: #ffa8b0; /* Bright pink */
+    border-radius: 50px; /* Extremely rounded corners */
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* Crazy shadow */
+    transform: skew(10deg, -5deg); /* Skew the container */
+    padding: 20px;
+    border: 5px dotted #0000ff; /* Dotted blue border */
+}
+
+.messages {
+    height: 400px;
+    overflow-y: scroll;
+    background-color: #ffedb3; /* Pastel yellow for message area */
+    padding: 20px;
+    border: 2px dashed #00ff00; /* Dashed green border */
+    font-size: 18px;
+    color: #d700ff; /* Magenta text */
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    animation: bounce 1s infinite alternate; /* Bounce animation */
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #ffb3ff; /* Pink input background */
+    border-radius: 30px;
+    margin-top: 20px;
+    transform: rotate(5deg); /* Tilted input container */
+}
+
+.input-box {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #0000ff; /* Blue border */
+    border-radius: 15px;
+    font-size: 18px;
+    background-color: #ffa; /* Light yellow input box */
+    color: #ff0000; /* Red text */
+}
+
+.send-button {
+    background-color: #00ff00; /* Neon green button */
+    color: #0000ff; /* Blue text */
+    border: 3px double #ff00ff; /* Double magenta border */
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 20px;
+    transform: skewX(15deg); /* Skewed button */
+}
+
+.send-button:hover {
+    background-color: #ff00ff; /* Magenta on hover */
+    color: #00ff00; /* Neon green text */
+    transform: scale(1.2); /* Make it grow */
+}
+
+/* Blinds Animation */
+#blinds {
+    background-color: #ff00ff; /* Neon pink blinds */
+    transition: top 2s ease-in-out;
+    border: 10px dashed #00ff00; /* Green dashed border */
+}
+
+#themeSelect {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #ff0000; /* Red dropdown */
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #000; /* Black border */
+    transform: rotate(-10deg);
+}
+
+button {
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #ff0080; /* Bright pink */
+    color: #ffffff;
+    border: 3px solid #00ffff;
+    border-radius: 30px;
+    transform: skew(10deg, -10deg); /* Skew all buttons */
+}
