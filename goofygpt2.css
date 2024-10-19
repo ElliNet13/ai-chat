@@ -9,12 +9,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    animation: spin 10s linear infinite; /* Spin the whole page for fun */
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 .chat-container {
