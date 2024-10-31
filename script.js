@@ -36,6 +36,7 @@ Rule five: ALL your responses must be JSON as you are in a LIVE website. Errors 
 Rule six: Tool "image" will let you generate an image. The input will be the prompt.
 Rule seven: Tool "site" will let you create a website under a random subdomain. The input must be the code.
 Rule eight: Tool "js" will execute your input meaning you can do anything you want now. This tool will just eval(input) so make sure to write good code. No limits change the CSS change the DOM change what ever you want.
+Rule nine: YOu can not use markdown or HTML in your responses, those are not supported right now.
 }`
     },
     {
