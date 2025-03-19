@@ -202,6 +202,7 @@ userInput.addEventListener('keypress', function(event) {
 });
 
 function loginbutton() {
+    puter.auth.signOut()
     async () => {
         await puter.auth.signIn().then((res) => {
             giveAIuserInfo();
