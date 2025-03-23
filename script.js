@@ -49,9 +49,13 @@ Rule nine: You can not use markdown or HTML in your responses, and those are not
     }
 ];
 
+function sendSystem(message) {
+    messages.push({ role: "system", content: message });
+}
+
 function giveAIuserInfo() {
     puter.auth.getUser().then(function(user) {
-        messages.push({ role: "system", content: `User info: ${JSON.stringify(user)}` });
+        sendSystem(`User info: ${JSON.stringify(user)}`)
     });
 }
 
@@ -90,7 +94,7 @@ function sendMessage() {
                 jsonResponse = JSON.parse(replyContent);
             } catch (e) {
                 replyElement.textContent = "Error parsing response. Check console.";
-                messages.push({ role: "system", content: "Your JSON is not valid." });
+                sendSystem("Your JSON is not valid." + e.message);
                 return;
             }
 
@@ -144,6 +148,9 @@ function sendMessage() {
                         } catch (error) {
                             console.error("Error generating image:", error);
                             toolResponseElement.textContent = "Error generating image: " + error.message;
+                            if (error.message.error.code && error.message.error.code === "monthly_limit_exceeded") {
+                                toolResponseElement.textContent = "Error: Monthly limit exceeded. Please try again later. Your limit (set by Puter) is: " + stringify(error.message.error.limit);
+                            }
                             executeTool(index + 1); // Move to next tool even after error
                         }
                     })();
@@ -164,7 +171,7 @@ function sendMessage() {
 
         }).catch((error) => {
             replyElement.textContent = "Error! Check console.";
-            messages.push({ role: "system", content: "Error: " + error });
+            sendSystem("Error: " + error.message);
         });
 
         // Scroll to bottom of messages
