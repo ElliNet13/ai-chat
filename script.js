@@ -131,14 +131,19 @@ function sendMessage() {
                     toolResponseElement.textContent = "Generating image...";
                     (async () => {
                         try {
+                            console.log("Attempting to generate image with input:", input);
                             const image = await puter.ai.txt2img(input);
+                            if (!image) {
+                                throw new Error("Image generation failed without error message.");
+                            }
                             toolResponseElement.textContent = ""; // Clear the "Generating image..." message
                             image.style.maxWidth = "400px";
                             image.style.maxHeight = "300px";
                             toolResponseElement.appendChild(image);
                             executeTool(index + 1); // Move to next tool
                         } catch (error) {
-                            toolResponseElement.textContent = "Error generating image.";
+                            console.error("Error generating image:", error);
+                            toolResponseElement.textContent = "Error generating image: " + error.message;
                             executeTool(index + 1); // Move to next tool even after error
                         }
                     })();
