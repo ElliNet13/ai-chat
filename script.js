@@ -28,7 +28,7 @@ let messages = [
     {
         role: "system",
         content: `We have some rules for you:
-Rule one: Always talk in JSON like with this example {tool:string input:string}
+Rule one: Always talk in JSON like with this example [{tool:string input:string}, {tool:string input:string}] you don't need have more then one tool, but this lets you chain your tools.
 Rule two: Do not use new lines in your JSON as this can break stuff sometimes.
 Rule three: Tool "respond" will let you respond to the user.
 Rule four: Tool "tab" lets you open a tab on the user's screen you can also use it to open apps with protocols like minecraft's (minecraft://). You can also use this to run any steam game! Run this with steam://rungameid/[INSERT THE STEAM APP ID HERE] with everything you know you should know steam app/game IDs. Enter the full URL or it will not work. You can include pages.
@@ -83,100 +83,74 @@ function sendMessage() {
 
         // Send messages to the chat API
         puter.ai.chat(messages).then((response) => {
-            // Extract the assistant's reply content
             let replyContent = response.message.content;
 
-            // Parse the JSON response
             let jsonResponse;
             try {
                 jsonResponse = JSON.parse(replyContent);
             } catch (e) {
-                replyElement.textContent = "Error parsing response. Check console for details.";
+                replyElement.textContent = "Error parsing response. Check console.";
                 messages.push({ role: "system", content: "Your JSON is not valid." });
                 return;
             }
 
-            // Handle the parsed JSON response
-            let tool = jsonResponse.tool;
-            let input = jsonResponse.input;
+            // Ensure response is an array for multiple tool calls
+            let toolActions = Array.isArray(jsonResponse) ? jsonResponse : [jsonResponse];
 
-            if (tool === "respond") {
-                replyElement.textContent = input;
-            } else if (tool === "tab") {
-                window.open(input, '_blank');
-                replyElement.textContent = "Opened a new tab.";
-            } else if (tool === "site") {
-                replyElement.textContent = "Creating website link...";
-                (async () => {
-                    // (1) Create a random directory
-                    let dirName = puter.randName();
-                    await puter.fs.mkdir(dirName)
+            function executeTool(index) {
+                if (index >= toolActions.length) return; // Stop when all tools are executed
 
-                    // (2) Write the index.html file
-                    await puter.fs.write(`${dirName}/index.html`, input);
-        
-                    // (3) Host the directory under a random subdomain
-                    let subdomain = puter.randName();
-                    const site = await puter.hosting.create(subdomain, dirName)
-        
-                    // Create the anchor element
-const anchor = document.createElement('a');
-anchor.href = `https://${site.subdomain}.puter.site`;
-anchor.target = "_blank";
-anchor.textContent = `https://${site.subdomain}.puter.site`;
+                let { tool, input } = toolActions[index];
 
-// Add text before the anchor
-replyElement.textContent = "Website hosted at: ";
+                if (tool === "respond") {
+                    replyElement.textContent = input;
+                    executeTool(index + 1); // Move to next tool
+                } else if (tool === "tab") {
+                    window.open(input, '_blank');
+                    replyElement.textContent = "Opened a new tab.";
+                    executeTool(index + 1);
+                } else if (tool === "site") {
+                    replyElement.textContent = "Creating website...";
+                    (async () => {
+                        let dirName = puter.randName();
+                        await puter.fs.mkdir(dirName);
+                        await puter.fs.write(`${dirName}/index.html`, input);
+                        let subdomain = puter.randName();
+                        const site = await puter.hosting.create(subdomain, dirName);
 
-// Append the anchor to replyElement
-replyElement.appendChild(anchor);
-                })();
-            } else if (tool === "image") {
-                // Show a generating image message
-                replyElement.textContent = "Generating image...";
-
-                // Use the puter.ai.txt2img function to generate the image
-                puter.ai.txt2img(input).then((image) => {
-                    // Clear the "Generating image..." text
-                    replyElement.textContent = "";
-
-                    // Apply styles to limit the image size
-                    image.style.maxWidth = "400px";  // Set maximum width
-                    image.style.maxHeight = "300px"; // Set maximum height
-                    image.style.width = "auto";      // Maintain aspect ratio
-                    image.style.height = "auto";     // Maintain aspect ratio
-                    
-                    // Append the generated image to the reply element
-                    replyElement.appendChild(image);
-
-                    // Download image if requested
-                    if (downloadimages.checked) {
-                        const link = document.createElement('a');
-                        link.href = image.src;
-                        link.download = input.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, ""); + ".png";
-                        setTimeout(() => {
-                            link.click();
-                            link.remove();
-                          }, 1000);                    
-                    }
-                }).catch((error) => {
-                    replyElement.textContent = "Error generating image.";
-                    console.error(error); // Log error for debugging
-                });
-            } else if (tool === "js") { 
-                eval(input);
-                replyElement.textContent = "Ran JS";
-            } else {
-                replyElement.textContent = "Unknown tool requested. (" + tool + ")";
-                messages.push({ role: "system", content: "The tool you requested does not exist!" });
+                        replyElement.textContent = `Website hosted at: https://${site.subdomain}.puter.site`;
+                        executeTool(index + 1);
+                    })();
+                } else if (tool === "image") {
+                    replyElement.textContent = "Generating image...";
+                    puter.ai.txt2img(input).then((image) => {
+                        replyElement.textContent = "";
+                        image.style.maxWidth = "400px";
+                        image.style.maxHeight = "300px";
+                        replyElement.appendChild(image);
+                        executeTool(index + 1);
+                    }).catch(() => {
+                        replyElement.textContent = "Error generating image.";
+                        executeTool(index + 1);
+                    });
+                } else if (tool === "js") {
+                    eval(input);
+                    replyElement.textContent = "Ran JS";
+                    executeTool(index + 1);
+                } else {
+                    replyElement.textContent = `Unknown tool requested (${tool})`;
+                    executeTool(index + 1);
+                }
             }
+
+            executeTool(0); // Start executing tools in sequence
 
             // Add assistant's reply to messages array
             messages.push({ role: "assistant", content: replyContent });
 
         }).catch((error) => {
-            replyElement.textContent = "Error! Check console for details.";
-            messages.push({ role: "system", content: "Error! Since there is no simple way to say it here is the JS error: " + error });
+            replyElement.textContent = "Error! Check console.";
+            messages.push({ role: "system", content: "Error: " + error });
         });
 
         // Scroll to bottom of messages
