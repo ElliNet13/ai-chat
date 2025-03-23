@@ -154,8 +154,10 @@ replyElement.appendChild(anchor);
                         const link = document.createElement('a');
                         link.href = image.src;
                         link.download = input.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, ""); + ".png";
-                        link.click();
-                        link.remove();
+                        setTimeout(() => {
+                            link.click();
+                            link.remove();
+                          }, 1000);                    
                     }
                 }).catch((error) => {
                     replyElement.textContent = "Error generating image.";
