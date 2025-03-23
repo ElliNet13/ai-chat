@@ -148,9 +148,6 @@ function sendMessage() {
                         } catch (error) {
                             console.error("Error generating image:", error);
                             toolResponseElement.textContent = "Error generating image: " + JSON.stringify(error);
-                            if (error.code && error.code === "monthly_limit_exceeded") {
-                                toolResponseElement.textContent = "Error: Monthly limit exceeded. Please try again later. Your limit (set by Puter) is: " + error.limit.toString();
-                            }
                             executeTool(index + 1); // Move to next tool even after error
                         }
                     })();
