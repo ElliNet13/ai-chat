@@ -73,7 +73,7 @@ function sendMessage() {
         // Add user message to messages array
         messages.push({ role: "user", content: message });
 
-        // Create reply message element
+        // Create a placeholder message for the assistant (generating)
         var replyElement = document.createElement('div');
         replyElement.classList.add('message');
         replyElement.textContent = "Generating...";
@@ -102,15 +102,21 @@ function sendMessage() {
 
                 let { tool, input } = toolActions[index];
 
+                // Create a new response element for each tool's action
+                var toolResponseElement = document.createElement('div');
+                toolResponseElement.classList.add('message');
+                toolResponseElement.textContent = "Executing tool: " + tool;
+                messagesContainer.appendChild(toolResponseElement);
+
                 if (tool === "respond") {
-                    replyElement.textContent = input;
+                    toolResponseElement.textContent = input;
                     executeTool(index + 1); // Move to next tool
                 } else if (tool === "tab") {
                     window.open(input, '_blank');
-                    replyElement.textContent = "Opened a new tab.";
+                    toolResponseElement.textContent = "Opened a new tab.";
                     executeTool(index + 1);
                 } else if (tool === "site") {
-                    replyElement.textContent = "Creating website...";
+                    toolResponseElement.textContent = "Creating website...";
                     (async () => {
                         let dirName = puter.randName();
                         await puter.fs.mkdir(dirName);
@@ -118,34 +124,34 @@ function sendMessage() {
                         let subdomain = puter.randName();
                         const site = await puter.hosting.create(subdomain, dirName);
 
-                        replyElement.textContent = `Website hosted at: https://${site.subdomain}.puter.site`;
+                        toolResponseElement.textContent = `Website hosted at: https://${site.subdomain}.puter.site`;
                         executeTool(index + 1);
                     })();
                 } else if (tool === "image") {
-                    replyElement.textContent = "Generating image...";
+                    toolResponseElement.textContent = "Generating image...";
                     puter.ai.txt2img(input).then((image) => {
-                        replyElement.textContent = "";
+                        toolResponseElement.textContent = "";
                         image.style.maxWidth = "400px";
                         image.style.maxHeight = "300px";
-                        replyElement.appendChild(image);
+                        toolResponseElement.appendChild(image);
                         executeTool(index + 1);
                     }).catch(() => {
-                        replyElement.textContent = "Error generating image.";
+                        toolResponseElement.textContent = "Error generating image.";
                         executeTool(index + 1);
                     });
                 } else if (tool === "js") {
                     eval(input);
-                    replyElement.textContent = "Ran JS";
+                    toolResponseElement.textContent = "Ran JS";
                     executeTool(index + 1);
                 } else {
-                    replyElement.textContent = `Unknown tool requested (${tool})`;
+                    toolResponseElement.textContent = `Unknown tool requested (${tool})`;
                     executeTool(index + 1);
                 }
             }
 
             executeTool(0); // Start executing tools in sequence
 
-            // Add assistant's reply to messages array
+            // Add assistant's final reply to messages array
             messages.push({ role: "assistant", content: replyContent });
 
         }).catch((error) => {
@@ -157,6 +163,7 @@ function sendMessage() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight + replyElement.offsetHeight + 12;
     }
 }
+
 
 // Single definition of changeTheme function
 function changeTheme(themeName) {
