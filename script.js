@@ -133,24 +133,38 @@ replyElement.appendChild(anchor);
             } else if (tool === "image") {
                 // Show a generating image message
                 replyElement.textContent = "Generating image...";
-
+                
                 // Use the puter.ai.txt2img function to generate the image
                 puter.ai.txt2img(input).then((image) => {
                     // Clear the "Generating image..." text
                     replyElement.textContent = "";
-
+                
                     // Apply styles to limit the image size
                     image.style.maxWidth = "400px";  // Set maximum width
                     image.style.maxHeight = "300px"; // Set maximum height
                     image.style.width = "auto";      // Maintain aspect ratio
                     image.style.height = "auto";     // Maintain aspect ratio
                     
-                    // Append the generated image to the reply element
+                    // Create a download button
+                    const downloadButton = document.createElement("button");
+                    downloadButton.textContent = "Download Image";
+                    
+                    // Add event listener to download the image when the button is clicked
+                    downloadButton.addEventListener("click", () => {
+                        const link = document.createElement("a");
+                        link.href = image.src;
+                        link.download = "generated-image.png";  // Name the file when downloading
+                        link.click();  // Trigger the download
+                    });
+
+                    // Append the generated image and download button to the reply element
                     replyElement.appendChild(image);
+                    replyElement.appendChild(downloadButton);
                 }).catch((error) => {
                     replyElement.textContent = "Error generating image.";
                     console.error(error); // Log error for debugging
                 });
+
             } else if (tool === "js") { 
                 eval(input);
                 replyElement.textContent = "Ran JS";
