@@ -153,7 +153,7 @@ replyElement.appendChild(anchor);
                     if (downloadimages.checked) {
                         const link = document.createElement('a');
                         link.href = image.src;
-                        link.download = input + ".png";
+                        link.download = input.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, ""); + ".png";
                         link.click();
                         link.remove();
                     }
