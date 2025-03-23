@@ -129,16 +129,19 @@ function sendMessage() {
                     })();
                 } else if (tool === "image") {
                     toolResponseElement.textContent = "Generating image...";
-                    puter.ai.txt2img(input).then((image) => {
-                        toolResponseElement.textContent = "";
-                        image.style.maxWidth = "400px";
-                        image.style.maxHeight = "300px";
-                        toolResponseElement.appendChild(image);
-                        executeTool(index + 1);
-                    }).catch(() => {
-                        toolResponseElement.textContent = "Error generating image.";
-                        executeTool(index + 1);
-                    });
+                    (async () => {
+                        try {
+                            const image = await puter.ai.txt2img(input);
+                            toolResponseElement.textContent = ""; // Clear the "Generating image..." message
+                            image.style.maxWidth = "400px";
+                            image.style.maxHeight = "300px";
+                            toolResponseElement.appendChild(image);
+                            executeTool(index + 1); // Move to next tool
+                        } catch (error) {
+                            toolResponseElement.textContent = "Error generating image.";
+                            executeTool(index + 1); // Move to next tool even after error
+                        }
+                    })();
                 } else if (tool === "js") {
                     eval(input);
                     toolResponseElement.textContent = "Ran JS";
