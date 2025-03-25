@@ -88,12 +88,13 @@ function sendMessage() {
         // Send messages to the chat API
         puter.ai.chat(messages).then((response) => {
             let replyContent = response.message.content;
+            messagesContainer.removeChild(replyElement);
 
             let jsonResponse;
             try {
                 jsonResponse = JSON.parse(replyContent);
             } catch (e) {
-                replyElement.textContent = "Error parsing response. Check console.";
+                replyElement.textContent = "Error parsing response.";
                 sendSystem("Your JSON is not valid." + e.message);
                 return;
             }
